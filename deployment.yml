@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello-container
-        image: <AWS_ECR_IMAGE_URI>
+        image: 202516164458.dkr.ecr.ap-south-1.amazonaws.com/java-app:latest
         ports:
         - containerPort: 8080
 ---
