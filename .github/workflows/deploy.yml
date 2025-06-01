@@ -49,7 +49,11 @@ jobs:
     - name: Update kubeconfig for EKS
       run: aws eks update-kubeconfig --region ap-south-1 --name ${{ secrets.EKS_CLUSTER_NAME }}
 
-    - name: Deploy to EKS
+    - name: Apply Kubernetes deployment manifest
       run: |
-        kubectl set image deployment/hello-eks-ecr-app hello-eks-ecr-app=202516164458.dkr.ecr.ap-south-1.amazonaws.com/java-app:latest
+        kubectl apply -f deployment.yml
+
+    - name: Deploy to EKS (update image)
+      run: |
+        kubectl set image deployment/hello-eks-ecr-app hello-eks-ecr-app=${{ secrets.ECR_REGISTRY }}/java-app:latest
         kubectl rollout status deployment/hello-eks-ecr-app
